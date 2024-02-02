@@ -15,7 +15,7 @@ export default function Home() {
           {format(new Date(), "EEEE',' d 'de' MMMM", {
             locale: ptBR,
           })}
-        </p>
+        </p> 
       </div>
 
       <div className="px-5 mt-6">
