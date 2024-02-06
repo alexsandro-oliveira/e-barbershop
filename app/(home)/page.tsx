@@ -5,20 +5,11 @@ import Header from "../_components/header";
 import { db } from "../_lib/prisma";
 import BarbershopItem from "./_components/barbershop-item";
 import Search from "./_components/search";
-import { db } from "../_lib/prisma";
-import BarbershopItem from "./_components/barbershop-item";
 
 export default async function Home() {
-  //chamar prisma (conexão bd) e pegar barbearias
-  const barbershop = await db.barbershop.findMany({})
+  //chamar prisma (conexão bd) e pegar as barbearias
+  const barbershops = await db.barbershop.findMany({});
 
-<<<<<<< HEAD
-export default async function Home() {
-  //chamar prisma (conexão bd) e pegar barbearias
-  const barbershop = await db.barbershop.findMany({});
-
-=======
->>>>>>> d354d8fe9e091d7ef400b4ce549d50d050623c4d
   return (
     <div>
       <Header />
@@ -29,7 +20,7 @@ export default async function Home() {
           {format(new Date(), "EEEE',' d 'de' MMMM", {
             locale: ptBR,
           })}
-        </p> 
+        </p>
       </div>
 
       <div className="px-5 mt-6">
@@ -45,22 +36,14 @@ export default async function Home() {
 
       <div className="mt-6">
         <h2 className="px-5 text-sm mb-3 uppercase text-gray-400 font-bold">
-<<<<<<< HEAD
           Recomendados
         </h2>
-=======
-          Recomendados</h2>
->>>>>>> d354d8fe9e091d7ef400b4ce549d50d050623c4d
 
         <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {barbershop.map((barbershop) => (
+          {barbershops.map((barbershop) => (
             <BarbershopItem key={barbershop.id} barbershop={barbershop} />
           ))}
-<<<<<<< HEAD
         </div>
-=======
-        </div>        
->>>>>>> d354d8fe9e091d7ef400b4ce549d50d050623c4d
       </div>
     </div>
   );
