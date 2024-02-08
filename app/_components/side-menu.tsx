@@ -18,7 +18,7 @@ const SideMenu = () => {
 
   const handleLogoutClick = () => signOut();
 
-  const handleLoginClick = () => signIn("google");
+  const handleLoginClick = () => signIn();
 
   return (
     <>
