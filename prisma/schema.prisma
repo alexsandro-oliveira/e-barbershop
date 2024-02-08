@@ -49,7 +49,7 @@ model Booking {
   service      Service    @relation(fields: [serviceId], references: [id])
   date         DateTime
   barbershopId String
-  barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
+  barbershop   Barbershop @relation(fields: [barbershopId], references: [id])    
 }
 
 model Account {
