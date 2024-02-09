@@ -1,3 +1,4 @@
+import { Toaster } from "@/app/_components/ui/sonner";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Footer from "./_components/footer";
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={`${inter.className} dark`}>
         <AuthProvider>
           {children}
+          <Toaster />
           <Footer />
         </AuthProvider>
       </body>
