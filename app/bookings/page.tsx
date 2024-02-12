@@ -1,3 +1,4 @@
+import { isFuture, isPast } from "date-fns";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import BookingItem from "../_components/booking-item";
@@ -25,6 +26,12 @@ const BookingsPage = async () => {
     },
   });
 
+  //função para separar os agendamentos confirmados (>= data atual) e finalizados (< data atual)
+  const confirmedBookings = bookings.filter((booking) =>
+    isFuture(booking.date)
+  );
+  const finishedBookings = bookings.filter((booking) => isPast(booking.date));
+
   return (
     <>
       <Header />
@@ -37,7 +44,7 @@ const BookingsPage = async () => {
         </h2>
 
         <div className="flex flex-col gap-3 pt-2">
-          {bookings.map((booking) => (
+          {confirmedBookings.map((booking) => (
             <BookingItem key={booking.id} booking={booking} />
           ))}
         </div>
@@ -47,7 +54,7 @@ const BookingsPage = async () => {
         </h2>
 
         <div className="flex flex-col gap-3 pt-2">
-          {bookings.map((booking) => (
+          {finishedBookings.map((booking) => (
             <BookingItem key={booking.id} booking={booking} />
           ))}
         </div>

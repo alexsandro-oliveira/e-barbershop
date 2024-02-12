@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { format } from "date-fns";
+import { format, isFuture } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
@@ -15,12 +15,17 @@ interface BookingItemProps {
 }
 
 const BookingItem = ({ booking }: BookingItemProps) => {
+  const isBookingConfirmed = isFuture(booking.date);
+
   return (
     <Card>
       <CardContent className="px-0 flex py-0">
         <div className="flex flex-col gap-2 py-5 flex-[3] pl-5">
-          <Badge className="bg-[#221C3D] text-primary hover:bg-[#221C3D] w-fit">
-            Confirmado
+          <Badge
+            variant={isBookingConfirmed ? "default" : "secondary"}
+            className="w-fit"
+          >
+            {isBookingConfirmed ? "Confirmado" : "Finalizado"}
           </Badge>
           <h2 className="font-bold">{booking.service.name}</h2>
 
