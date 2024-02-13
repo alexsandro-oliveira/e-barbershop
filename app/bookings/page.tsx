@@ -1,4 +1,3 @@
-import { isFuture, isPast } from "date-fns";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import BookingItem from "../_components/booking-item";
@@ -15,22 +14,41 @@ const BookingsPage = async () => {
     redirect("/");
   }
 
-  // buscar os agendamentos dos usuários no banco
-  const bookings = await db.booking.findMany({
-    where: {
-      userId: (session.user as any).id,
-    },
-    include: {
-      service: true,
-      barbershop: true,
-    },
-  });
+  // buscar os agendamentos dos usuários no banco onde a date é >= que a data atual ou < que a data atual, e função para rodar as query em paralelo através da promise.all
+  const [confirmedBookings, finishedBookings] = await Promise.all([
+    db.booking.findMany({
+      where: {
+        userId: (session.user as any).id,
+        date: {
+          gte: new Date(),
+        },
+      },
+      include: {
+        service: true,
+        barbershop: true,
+      },
+    }),
+    db.booking.findMany({
+      where: {
+        userId: (session.user as any).id,
+        date: {
+          lt: new Date(),
+        },
+      },
+      include: {
+        service: true,
+        barbershop: true,
+      },
+    }),
+  ]);
 
+  /*
   //função para separar os agendamentos confirmados (>= data atual) e finalizados (< data atual)
   const confirmedBookings = bookings.filter((booking) =>
     isFuture(booking.date)
   );
   const finishedBookings = bookings.filter((booking) => isPast(booking.date));
+  */
 
   return (
     <>
