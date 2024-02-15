@@ -12,24 +12,30 @@ export default async function Home() {
   const session = await getServerSession(authOptions); //função para pegar a sessão do usuário
 
   // Promise.all função para executar as query paralelamente e não uma em seguida da outra.
-  const [barbershops, confirmedBookings] = await Promise.all([
-    db.barbershop.findMany({}), //chamar prisma (conexão bd) e pegar as barbearias
+  const [barbershops, recommendedBarbershops, confirmedBookings] =
+    await Promise.all([
+      db.barbershop.findMany({}), //chamar prisma (conexão bd) e pegar as barbearias
+      db.barbershop.findMany({
+        orderBy: {
+          id: "asc",
+        },
+      }),
 
-    session?.user
-      ? db.booking.findMany({
-          where: {
-            userId: (session.user as any).id,
-            date: {
-              gte: new Date(),
+      session?.user
+        ? db.booking.findMany({
+            where: {
+              userId: (session.user as any).id,
+              date: {
+                gte: new Date(),
+              },
             },
-          },
-          include: {
-            service: true,
-            barbershop: true,
-          },
-        })
-      : Promise.resolve([]),
-  ]);
+            include: {
+              service: true,
+              barbershop: true,
+            },
+          })
+        : Promise.resolve([]),
+    ]);
 
   return (
     <div>
@@ -87,7 +93,7 @@ export default async function Home() {
         </h2>
 
         <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {barbershops.map((barbershop) => (
+          {recommendedBarbershops.map((barbershop) => (
             <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
               <BarbershopItem barbershop={barbershop} />
             </div>
