@@ -10,25 +10,27 @@ import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 
 const Header = () => {
   return (
-    <Card>
-      <CardContent className="p-5 justify-between items-center flex flex-row">
-        <Link href="/">
-          <Image src="/logo.png" alt="fsw barber" height={40} width={150} />
-        </Link>
+    <header>
+      <Card>
+        <CardContent className="p-5 justify-between items-center flex flex-row">
+          <Link href="/">
+            <Image src="/logo.png" alt="fsw barber" height={40} width={150} />
+          </Link>
 
-        <Sheet>
-          <SheetTrigger>
-            <Button variant="outline" size="icon" className="h-8 w-8">
-              <MenuIcon size={16} />
-            </Button>
-          </SheetTrigger>
+          <Sheet>
+            <SheetTrigger>
+              <Button variant="outline" size="icon" className="h-8 w-8">
+                <MenuIcon size={16} />
+              </Button>
+            </SheetTrigger>
 
-          <SheetContent className="p-0">
-            <SideMenu />
-          </SheetContent>
-        </Sheet>
-      </CardContent>
-    </Card>
+            <SheetContent className="p-0">
+              <SideMenu />
+            </SheetContent>
+          </Sheet>
+        </CardContent>
+      </Card>
+    </header>
   );
 };
 
