@@ -87,7 +87,7 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="mt-6 mb-[4.5rem]">
+      {/* <div className="mt-6 mb-[4.5rem]">
         <h2 className="px-5 text-xs mb-3 uppercase text-gray-400 font-bold">
           Populares
         </h2>
@@ -99,7 +99,7 @@ export default async function Home() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
